@@ -1,0 +1,6 @@
+{
+  "name": "Tenmin Club",
+  "description": "A premium, distraction-free breath cycle tracker and 10-minute meditation companion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
