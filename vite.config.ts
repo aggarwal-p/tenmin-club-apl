@@ -6,7 +6,7 @@ import {VitePWA} from 'vite-plugin-pwa';
 
 export default defineConfig(() => {
   return {
-    base: '/your-repo-name/',
+    base: '/tenmin-club-apl/',
     plugins: [
       react(),
       tailwindcss(),
@@ -20,8 +20,8 @@ export default defineConfig(() => {
           background_color: '#FAF9F6',
           display: 'standalone',
           orientation: 'portrait',
-          start_url: '/your-repo-name/',
-          scope: '/your-repo-name/',
+          start_url: '/tenmin-club-apl/',
+          scope: '/tenmin-club-apl/',
           developer: {
             name: 'Pankaj HUB',
             url: 'https://ais-pre-wzoo5y5dojw4dfrqqxw36b-930511672955.asia-southeast1.run.app'
