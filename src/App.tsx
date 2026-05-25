@@ -223,8 +223,8 @@ const audio = new ZenAudioEngine();
 export default function App() {
   // --- States ---
   const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [sessionTime, setSessionTime] = useState<number>(600); // 10 minutes = 600s
-  const [maxDuration, setMaxDuration] = useState<number>(600); // Track limit configured
+  const [sessionTime, setSessionTime] = useState<number>(660); // 11 minutes = 660s
+  const [maxDuration, setMaxDuration] = useState<number>(660); // Track limit configured
   const [totalExhales, setTotalExhales] = useState<number>(0);
   const [lastExhaleTime, setLastExhaleTime] = useState<number | null>(null);
   const [tapTimestamps, setTapTimestamps] = useState<number[]>([]);
@@ -277,10 +277,10 @@ export default function App() {
     let text = "";
     let voiceLang = "";
     if (lang === 'en') {
-      text = "Welcome to Tenmin Club. Scientific research shows that steady breathing at five to seven point five cycles per minute signals physical peace. Tap the center bubble gently exactly on each exhalation to secure your custom session rhythm.";
+      text = "Welcome to Tenmin Shwas Club. Scientific research shows that steady breathing at five to seven point five cycles per minute signals physical peace. Tap the center bubble gently exactly on each exhalation to secure your custom session rhythm.";
       voiceLang = "en-US";
     } else {
-      text = "टेनमिन क्लब में आपका स्वागत है। श्वास विज्ञान के अनुसार, प्रति मिनट पाँच से साढे सात बार सांस लेना शारीरिक शांति को दर्शाता है। प्रत्येक बार सांस बाहर छोड़ते समय बीच के गोलाकार बटन को धीरे से छुएं, ताकि हम आपकी अनूठी श्वास गति को दर्ज कर सकें।";
+      text = "टेनमिन श्वास क्लब में आपका स्वागत है। श्वास विज्ञान के अनुसार, प्रति मिनट पाँच से साढे सात बार सांस लेना शारीरिक शांति को दर्शाता है। प्रत्येक बार सांस बाहर छोड़ते समय बीच के गोलाकार बटन को धीरे से छुएं, ताकि हम आपकी अनूठी श्वास गति को दर्ज कर सकें।";
       voiceLang = "hi-IN";
     }
 
@@ -327,7 +327,10 @@ export default function App() {
 
   // Load history from localStorage inside browser
   useEffect(() => {
-    const cached = localStorage.getItem("tenmin_history");
+    let cached = localStorage.getItem("tenmin_shwas_history");
+    if (!cached) {
+      cached = localStorage.getItem("tenmin_history");
+    }
     if (cached) {
       try {
         setHistory(JSON.parse(cached));
@@ -365,7 +368,7 @@ export default function App() {
   // Quick Mode dynamic session length switch
   useEffect(() => {
     if (!isRunning) {
-      const targetSeconds = isQuickMode ? 60 : 600;
+      const targetSeconds = isQuickMode ? 60 : 660;
       setSessionTime(targetSeconds);
       setMaxDuration(targetSeconds);
     }
@@ -433,7 +436,7 @@ export default function App() {
     setActiveSpokenLang(null);
     setIsRunning(false);
     setLedStatus('standby');
-    setSessionTime(isQuickMode ? 60 : 600);
+    setSessionTime(isQuickMode ? 60 : 660);
     setTotalExhales(0);
     setLastExhaleTime(null);
     setTapTimestamps([]);
@@ -562,12 +565,12 @@ export default function App() {
 
     const updatedHistory = [freshEntry, ...history];
     setHistory(updatedHistory);
-    localStorage.setItem("tenmin_history", JSON.stringify(updatedHistory));
+    localStorage.setItem("tenmin_shwas_history", JSON.stringify(updatedHistory));
     
     // Clear summary to reset view beautifully
     setSessionSummary(null);
     setLedStatus('standby');
-    setSessionTime(isQuickMode ? 60 : 600);
+    setSessionTime(isQuickMode ? 60 : 660);
     setTotalExhales(0);
     setLastExhaleTime(null);
     setTapTimestamps([]);
@@ -579,7 +582,7 @@ export default function App() {
   const deleteHistoryItem = (id: string) => {
     const updated = history.filter(item => item.id !== id);
     setHistory(updated);
-    localStorage.setItem("tenmin_history", JSON.stringify(updated));
+    localStorage.setItem("tenmin_shwas_history", JSON.stringify(updated));
     audio.playClick();
   };
 
@@ -627,8 +630,8 @@ export default function App() {
             <div className="w-4.5 h-4.5 border-2 border-white rounded-full"></div>
           </div>
           <div>
-            <h1 className="text-xl font-serif font-bold tracking-tight text-natural-dark flex items-baseline gap-1">
-              Tenmin <span className="font-sans font-bold tracking-widest text-natural-teal text-xs uppercase">Club</span>
+            <h1 className="text-xl font-serif font-bold tracking-tight text-natural-dark flex flex-wrap items-baseline gap-1">
+              Tenmin Shwas <span className="font-sans font-bold tracking-widest text-natural-teal text-xs uppercase">Club</span>
             </h1>
             <p className="text-[9px] font-mono font-bold uppercase tracking-widest text-stone-600">Mindful breath metrics</p>
           </div>
@@ -707,7 +710,7 @@ export default function App() {
             <div>
               <h3 className="text-xs font-bold text-natural-dark uppercase tracking-wider mb-2 font-sans flex items-center gap-1.5">
                 <Activity size={14} className="text-natural-teal" />
-                The Tenmin Concept
+                The Tenmin Shwas Concept
               </h3>
               <p className="text-[12.5px] text-natural-charcoal font-medium leading-relaxed">
                 Steady breathing at 5 to 7.5 cycles per minute signals physical peace. Tap the center bubble gently exactly on each exhalation to secure your custom session rhythm.
@@ -762,7 +765,7 @@ export default function App() {
                 <div className="py-12 text-center text-stone-500 flex flex-col items-center justify-center gap-2">
                   <Heart size={24} className="stroke-[2] text-stone-400" />
                   <p className="text-xs font-bold text-stone-700">No records logged yet.</p>
-                  <p className="text-[11px] text-stone-600 max-w-[200px] mx-auto mt-1 leading-relaxed">Your saved 10-minute breathe completions will populate here.</p>
+                  <p className="text-[11px] text-stone-600 max-w-[200px] mx-auto mt-1 leading-relaxed">Your saved breathe completions will populate here.</p>
                 </div>
               ) : (
                 <div className="space-y-3 max-h-[260px] overflow-y-auto pr-1">
@@ -833,13 +836,27 @@ export default function App() {
           
           {/* Inner Header/Timer Workspace Block */}
           <div className="text-center w-full flex flex-col items-center -mb-2">
-            <h1 
-              id="timer-display" 
-              className="text-[72px] md:text-[96px] font-light leading-none tracking-tighter text-natural-dark"
-            >
-              {formatTime(sessionTime)}
-            </h1>
-            <p className="text-natural-teal font-serif italic text-base md:text-lg transition-all duration-700">
+            {isRunning ? (
+              <div className="h-[96px] flex flex-col items-center justify-center w-full max-w-sm px-4" id="active-activity-bar-container">
+                <div className="w-full h-3 bg-[#E6E1D8] rounded-full overflow-hidden relative shadow-inner border border-stone-200">
+                  <div className="absolute left-0 top-0 bottom-0 w-32 animate-activity-scan">
+                    <div className="w-full h-full bg-gradient-to-r from-emerald-400 via-teal-400 via-cyan-400 via-sky-500 via-indigo-500 to-purple-500 rounded-full animate-gradient-flow shadow-[0_0_12px_rgba(16,185,129,0.8)]" />
+                  </div>
+                </div>
+                <span className="text-[10px] font-mono tracking-widest text-emerald-800 font-extrabold uppercase mt-3 flex items-center gap-1.5 animate-pulse bg-emerald-50 border border-emerald-100 px-3 py-1 rounded-full shadow-xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 inline-block animate-ping" />
+                  Measurement in progress
+                </span>
+              </div>
+            ) : (
+              <h1 
+                id="timer-display" 
+                className="text-[72px] md:text-[96px] font-light leading-none tracking-tighter text-natural-dark"
+              >
+                {formatTime(sessionTime)}
+              </h1>
+            )}
+            <p className="text-natural-teal font-serif italic text-base md:text-lg transition-all duration-700 mt-1">
               {isRunning ? "Stay present in this moment" : "A calm mind awaits"}
             </p>
           </div>
@@ -849,7 +866,7 @@ export default function App() {
             
             {/* Interactive Trial / Testing Badge */}
             <div className="absolute top-4 right-4 flex items-center gap-2 bg-natural-ring px-2.5 py-0.5 rounded-full text-natural-teal border border-natural-border text-xs">
-              <span className="font-sans font-bold text-[10px] tracking-wide text-natural-teal">Quick 1-min Test</span>
+              <span className="font-sans font-bold text-[10px] tracking-wide text-natural-teal">Quick Test</span>
               <input 
                 type="checkbox" 
                 checked={isQuickMode} 
@@ -912,14 +929,6 @@ export default function App() {
                 style={{ touchAction: 'manipulation' }}
                 id="breath-circle-action-btn"
               >
-                {/* Visual pulse fill wave behind text */}
-                {isRunning && (
-                  <div 
-                    className="absolute bottom-0 left-0 right-0 bg-natural-teal/20 transition-all duration-300"
-                    style={{ height: `${Math.min(100, Math.max(5, (sessionTime / maxDuration) * 100))}%` }}
-                  />
-                )}
-
                 {/* Concentric helper text */}
                 <div className="z-10 text-center px-4 flex flex-col items-center justify-center pointer-events-none selection:bg-transparent">
                   <span className={`text-sm md:text-base uppercase tracking-[0.2em] font-black block mb-1 md:mb-2 transition-colors duration-500 ${
@@ -935,8 +944,8 @@ export default function App() {
                       <span className="text-stone-850 text-[11px] md:text-xs font-bold italic font-serif">
                         Tap to track exhale
                       </span>
-                      <span className="text-[10px] md:text-[11px] font-mono tracking-widest text-white font-extrabold uppercase mt-2 md:mt-3 block bg-natural-teal px-2.5 py-0.5 md:py-1 rounded-full shadow-sm">
-                        Tracked: {totalExhales}
+                      <span className="text-[10px] md:text-[11px] font-sans font-bold tracking-widest text-white uppercase mt-2 md:mt-3 block bg-gradient-to-r from-emerald-500 via-teal-500 via-cyan-500 to-indigo-500 animate-gradient-flow px-3 py-1 rounded-full shadow-sm">
+                        Flow Active
                       </span>
                     </>
                   ) : (
@@ -968,7 +977,7 @@ export default function App() {
                     id="start-session-trigger-btn"
                   >
                     <Play size={13} fill="currentColor" />
-                    Start Session ({isQuickMode ? "1m" : "10m"})
+                    Start Session ({isQuickMode ? "Quick Test" : "Measurement time"})
                   </motion.button>
                 ) : (
                   <div className="flex gap-2 w-full justify-center">
@@ -1002,18 +1011,21 @@ export default function App() {
               </AnimatePresence>
             </div>
             
-            {/* Live Stats Row during Active meditations */}
+            {/* Live Stats Row during Active meditations (Replaced stress-inducing counters with a second gorgeous vibrant activity flow bar) */}
             {isRunning && (
-              <div className="mt-6 grid grid-cols-2 gap-4 w-full max-w-md pt-4 border-t border-natural-border/50 text-center animate-fade-in">
-                <div>
-                  <span className="block text-[9.5px] uppercase font-sans tracking-wider text-stone-600 font-bold">Total Exhales</span>
-                  <span className="text-xl font-serif font-black text-natural-dark">{totalExhales}</span>
-                </div>
-                <div>
-                  <span className="block text-[9.5px] uppercase font-sans tracking-wider text-stone-600 font-bold font-sans">Gap Since Last</span>
-                  <span className="text-xl font-serif font-black text-natural-dark">
-                    {lastExhaleTime ? `${((Date.now() - lastExhaleTime) / 1000).toFixed(1)}s` : "0.0s"}
-                  </span>
+              <div className="mt-6 w-full max-w-sm pt-4 border-t border-natural-border/50 text-center animate-fade-in">
+                <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-sky-50 rounded-2xl p-4 border border-natural-border/60 shadow-sm flex flex-col items-center gap-3">
+                  <div className="w-full flex items-center justify-between text-[10px] font-sans font-bold text-stone-600 tracking-wider">
+                    <span>MIND BALANCE</span>
+                    <span className="text-emerald-700 animate-pulse uppercase">CONNECTED FLOW</span>
+                  </div>
+                  <div className="w-full h-4 bg-stone-100 rounded-full overflow-hidden relative border border-stone-200">
+                    <div className="absolute inset-0 bg-gradient-to-r from-teal-400 via-emerald-400 via-cyan-400 via-sky-500 via-indigo-400 to-purple-500 animate-gradient-flow" style={{ width: '100%' }} />
+                    <div className="absolute top-0 bottom-0 w-1/3 bg-white/35 skew-x-12 animate-[pulse_2s_infinite]" />
+                  </div>
+                  <p className="text-[10.5px] italic font-serif text-teal-950 leading-relaxed max-w-[240px]">
+                    Let go of the count. Your patterns are being securely gathered underneath. Simply exhale and tap.
+                  </p>
                 </div>
               </div>
             )}
@@ -1043,7 +1055,7 @@ export default function App() {
 
               {/* Main Score Display Box */}
               <div className="bg-white p-6 rounded-2xl text-center border border-natural-border mb-6 relative overflow-hidden shadow-sm">
-                <span className="block text-[10px] uppercase font-sans tracking-widest text-natural-teal font-extrabold mb-1">Your Tenmin Value</span>
+                <span className="block text-[10px] uppercase font-sans tracking-widest text-natural-teal font-extrabold mb-1">Your Tenmin Shwas Value</span>
                 <div className="text-5xl font-serif font-black text-natural-dark mt-1 flex items-baseline justify-center">
                   <span>{sessionSummary.finalScore}</span>
                   <span className="text-xs font-sans font-bold tracking-widest text-natural-teal uppercase ml-1.5 font-sans">Value</span>
@@ -1123,7 +1135,7 @@ export default function App() {
 
                 <div>
                   <textarea
-                    placeholder="Reflect briefly on your 10-minute breathe experience... (optional)"
+                    placeholder="Reflect briefly on your breathe experience... (optional)"
                     value={journalNotes}
                     onChange={(e) => setJournalNotes(e.target.value)}
                     className="w-full text-xs p-3 rounded-xl border border-natural-border focus:outline-none focus:ring-1 focus:ring-natural-teal bg-white max-h-24 min-h-[60px]"
@@ -1137,7 +1149,7 @@ export default function App() {
                   onClick={() => {
                     setSessionSummary(null);
                     setLedStatus('standby');
-                    setSessionTime(isQuickMode ? 60 : 600);
+                    setSessionTime(isQuickMode ? 60 : 660);
                     setTotalExhales(0);
                     setLastExhaleTime(null);
                     setTapTimestamps([]);
@@ -1171,26 +1183,26 @@ export default function App() {
               id="help-drawer-popup"
             >
               <h2 className="text-xl font-serif font-medium text-natural-dark mb-4 pb-2 border-b border-natural-border/60">
-                The Tenmin Concept
+                The Tenmin Shwas Concept
               </h2>
               
               <div className="space-y-4 text-stone-600 leading-relaxed text-xs">
                 <p>
-                  <strong>What is Tenmin Club?</strong><br />
-                  A 10-minute session provides an ideal window to steady the nervous system, lower resting heart rates, and stabilize focus. Tenmin Club operates on the principle of self-tallying exhalations during continuous deep breathing.
+                  <strong>What is Tenmin Shwas Club?</strong><br />
+                  A standard measurement session provides an ideal window to steady the nervous system, lower resting heart rates, and stabilize focus. Tenmin Shwas Club operates on the principle of self-tallying exhalations during continuous deep breathing.
                 </p>
 
                 <p>
                   <strong>How do I practice here?</strong><br />
                   1. Find a comfortable posture, relax your jaw, and let your hands fall loosely.<br />
-                  2. Select either the standard 10-minute session or toggle "Quick 1-min Test" to trial the interface.<br />
+                  2. Select either the standard measurement session or toggle "Quick Test" to trial the interface.<br />
                   3. Tap <strong>Start Session</strong>. The LED indicator turns active green.<br />
                   4. Every single time your lungs conclude a slow exhalation/out-breath, click or tap the central circular button.
                 </p>
 
                 <div className="p-3 bg-white border border-natural-border rounded-xl text-[11px] text-stone-700 leading-relaxed">
-                  <strong>The Tenmin Metric Adjustment Explained:</strong><br />
-                  If the 10 minutes run down completely and the gap between your last registered exhale and 00:00 is larger than <strong>8 seconds</strong>, the tool automatically adds an adjustment cycle of +1 to your aggregate score. We assume a final, silent healthy breath flow was beautifully completed but not registered during the terminal buzzer transition.
+                  <strong>The Tenmin Shwas Metric Adjustment Explained:</strong><br />
+                  If the measurement session runs down completely and the gap between your last registered exhale and 00:00 is larger than <strong>8 seconds</strong>, the tool automatically adds an adjustment cycle of +1 to your aggregate score. We assume a final, silent healthy breath flow was beautifully completed but not registered during the terminal buzzer transition.
                 </div>
 
                 <p>
