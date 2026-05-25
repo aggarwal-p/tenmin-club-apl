@@ -849,12 +849,12 @@ export default function App() {
                 </span>
               </div>
             ) : (
-              <h1 
-                id="timer-display" 
-                className="text-[72px] md:text-[96px] font-light leading-none tracking-tighter text-natural-dark"
-              >
-                {formatTime(sessionTime)}
-              </h1>
+              <div className="h-[96px] flex flex-col items-center justify-center w-full max-w-sm px-4 animate-fade-in" id="standby-activity-bar-container">
+                <span className="text-[10px] font-mono tracking-widest text-[#245E5A] font-extrabold uppercase flex items-center gap-1.5 bg-stone-50 border border-stone-200/60 px-4.5 py-1.5 rounded-full shadow-xs">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#1B8C5A] inline-block animate-pulse" />
+                  Ready to start
+                </span>
+              </div>
             )}
             <p className="text-natural-teal font-serif italic text-base md:text-lg transition-all duration-700 mt-1">
               {isRunning ? "Stay present in this moment" : "A calm mind awaits"}
@@ -931,33 +931,39 @@ export default function App() {
               >
                 {/* Concentric helper text */}
                 <div className="z-10 text-center px-4 flex flex-col items-center justify-center pointer-events-none selection:bg-transparent">
-                  <span className={`text-sm md:text-base uppercase tracking-[0.2em] font-black block mb-1 md:mb-2 transition-colors duration-500 ${
-                    isRunning ? 'text-natural-teal' : 'text-stone-500/80'
-                  }`}>
-                    Exhale
-                  </span>
-                  
-                  <div className="w-10 h-[2px] bg-natural-border mb-3" />
-
                   {isRunning ? (
                     <>
-                      <span className="text-stone-850 text-[11px] md:text-xs font-bold italic font-serif">
-                        Tap to track exhale
+                      <span className="text-5xl md:text-6xl font-serif font-black text-[#245E5A] block tracking-tight">
+                        {totalExhales}
                       </span>
-                      <span className="text-[10px] md:text-[11px] font-sans font-bold tracking-widest text-white uppercase mt-2 md:mt-3 block bg-gradient-to-r from-emerald-500 via-teal-500 via-cyan-500 to-indigo-500 animate-gradient-flow px-3 py-1 rounded-full shadow-sm">
-                        Flow Active
+                      <span className="text-[9px] uppercase tracking-widest font-sans font-extrabold text-stone-600 mt-1 block">
+                        Tracking Value
+                      </span>
+                      
+                      <div className="w-10 h-[2px] bg-natural-border my-2.5" />
+
+                      <span className="text-[10px] md:text-[11px] font-sans font-bold tracking-widest text-white uppercase block bg-gradient-to-r from-emerald-500 via-teal-500 via-cyan-500 to-indigo-500 animate-gradient-flow px-3 py-1 rounded-full shadow-sm">
+                        Tap on Exhale
                       </span>
                     </>
                   ) : (
-                    <span className="text-stone-500 text-[11px] md:text-xs font-bold italic font-serif">
-                      Awaiting start
-                    </span>
+                    <>
+                      <span className={`text-sm md:text-base uppercase tracking-[0.2em] font-black block mb-1 md:mb-2 transition-colors duration-500 text-stone-500/80`}>
+                        Exhale
+                      </span>
+                      
+                      <div className="w-10 h-[2px] bg-natural-border mb-3" />
+
+                      <span className="text-stone-500 text-[11px] md:text-xs font-bold italic font-serif">
+                        Awaiting start
+                      </span>
+                    </>
                   )}
                 </div>
 
                 {/* Tiny wave particle that spikes on click */}
                 <span className="absolute bottom-4 font-mono text-[8px] md:text-[9px] tracking-widest uppercase text-stone-600 font-bold pointer-events-none z-10 selection:bg-transparent">
-                  {isRunning ? "Cycle Active" : "Disabled"}
+                  {isRunning ? "Measurement Active" : "Disabled"}
                 </span>
 
               </button>
